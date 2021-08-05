@@ -1,0 +1,4 @@
+qiime tools import --type 'SampleData[PairedEndSequencesWithQuality]' --input-path data/manifest.tsv --output-path paired-end-demux.qza --input-format PairedEndFastqManifestPhred33V2
+qiime dada2 denoise-paired --i-demultiplexed-seqs paired-end-demux.qza --p-trunc-len-f 270 --p-trunc-len-r 180 --output-dir dada2 --p-trunc-q 5 --p-n-threads 0 --verbose
+qiime feature-classifier classify-sklearn --i-classifier gg-13-8-99-515-806-nb-classifier.qza  --i-reads dada2/representative_sequences.qza --o-classification taxonomy.qza
+qiime metadata tabulate --m-input-file taxonomy.qza --o-visualization taxonomy.qzv

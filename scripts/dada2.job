@@ -9,6 +9,9 @@
 #SBATCH --mail-user=aflamhol@caltech.edu   # email address
 #SBATCH --mail-type=END
 #SBATCH --mail-type=FAIL
+#SBATCH --job-name=dada2_soil
+#SBATCH --output=dada2_soil_%j.log
+#SBATCH --error=dada2_soil_err_%j.log
 
 conda activate qiime2-2021.4
 

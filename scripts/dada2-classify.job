@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#Submit this script with: sbatch thefilename
+
+#SBATCH --time=48:00:00     # walltime
+#SBATCH --ntasks=16         # number of processor cores (i.e. tasks)
+#SBATCH --nodes=1           # number of nodes
+#SBATCH --mem-per-cpu=64G   # memory per CPU core
+#SBATCH --mail-user=aflamhol@caltech.edu   # email address
+#SBATCH --mail-type=END
+#SBATCH --mail-type=FAIL
+#SBATCH --job-name=dada2_soil2
+#SBATCH --output=dada2_soil2_%j.log
+#SBATCH --error=dada2_soil2_err_%j.log
+
+module purge
+
+eval "$(conda shell.bash hook)"
+
+conda activate qiime2-2021.4
+
+qiime feature-classifier classify-sklearn --i-classifier qiime/gg-13-8-99-515-806-nb-classifier.qza  --i-reads dada2/representative_sequences.qza --o-classification tax/taxonomy.qza
+
+conda deactivate 
